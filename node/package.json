@@ -1,0 +1,14 @@
+{
+  "name": "myapp",
+  "version": "0.0.0",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "@google-cloud/pubsub": "4.11.0",
+    "@google-cloud/storage": "7.16.0",
+    "google-auth-library": "^9.15.1",
+    "googleapis": "^148.0.0",
+    "log4js": "^0.6.27"
+  }
+}
