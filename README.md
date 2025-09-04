@@ -93,6 +93,32 @@ GCP Audit logs (if enabled), will show access and the key used to sign the reque
 Also see [GCP Service Account Last usage auditing using Golang](https://blog.salrashid.dev/articles/2022/service_account_usage/)
 
 
+### Issue Time limited tokens on GCE, GKE or Cloud Run
+
+THe following shows how you can generate a service account JWT token with a limited shelf-life.
+
+What the following basically does is uses the GCE metadata server and self-impersonation to `signJWT` where the JWT has a limited `expiration` field set.
+
+* [Google Cloud Storage SignedURL with Cloud Run, Cloud Functions and GCE VMs](https://github.com/salrashid123/gcs_signedurl)
+* [GCE Metadata Server Emulator](https://github.com/salrashid123/gce_metadata_server)
+
+To use this
+
+```bash
+## first run the gce metadata server emulator:
+## https://github.com/salrashid123/gce_metadata_server
+
+### the metadata server must have the "signJWT" permmission on itself
+
+### then in a new window
+export GCE_METADATA_HOST=localhost:8080
+go run main.go
+```
+
+The code here uses a custom 'TokenSource' which will attempt to automatically refresh the signedJWT.
+
+Now, if you just wanted the library to issue a time-limited token, just set the `duration` process.  Note that the GCP jwt access tokens allows for a lot of leeway even if `exp` field set on the orignial token has expired (eg, like it will work for like 5mins beyond the `exp` field)
+
 ### Random
 
 The following are hypothetical restrictions (i.,e these are just ideas google could implement)
